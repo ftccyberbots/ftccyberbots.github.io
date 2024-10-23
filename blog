@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+if [[ "$1" != "post" && "$1" != "page" ]]; then
+  echo "Invalid argument. Please use 'post' or 'page'."
+  exit 1
+fi
+
+if [[ "$1" == "post" ]]; then
+  mkdir -p content/blog
+  touch content/posts/$2.md
+  cat <<EOT >> content/posts/$2.md
++++
+title = 'Please Change This Title'
+date = $(date '+%Y-%m-%d')
+draft = true
++++
+EOT
+  $EDITOR content/posts/$2.md
+elif [[ "$1" == "page" ]]; then
+  mkdir -p content
+  touch content/$2.md
+  cat <<EOT >> content/$2.md
++++
+title = 'Please Change This Title'
+date = $(date '+%Y-%m-%d')
+draft = true
++++
+EOT
+  $EDITOR content/pages/$2.md
+fi
